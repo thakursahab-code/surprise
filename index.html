@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sorry Game 😌</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  transition: background 0.6s;
+}
+
+.container {
+  max-width: 850px;
+  padding: 30px;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+p {
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+.buttons {
+  position: relative;
+  height: 340px;
+  margin-top: 35px;
+}
+
+button {
+  position: absolute;
+  padding: 12px 20px;
+  border-radius: 30px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.no {
+  background: #ff4d6d;
+  color: white;
+}
+
+.yes {
+  background: white;
+  color: #ff4d6d;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body style="background:linear-gradient(135deg,#ff758c,#ff7eb3)">
+<div class="container">
+  <h1 id="title">Okay okay… meri galti thi 🙈</h1>
+  <p id="text">Lekin suspense abhi baaki hai 😏</p>
+  <div class="buttons" id="buttons"></div>
+</div>
+
+<script>
+const stages = [
+  {
+    bg: "linear-gradient(135deg,#ff758c,#ff7eb3)",
+    title: "Stage 1 😏",
+    lines: [
+      "Itna gussa sehat ke liye theek nahi hota",
+      "Tumhara gussa bhi kaafi cute hota hai",
+      "Button pakadne ki koshish kar rahi ho kya 😄",
+      "Mujhe pata hai tum smile kar rahi ho"
+    ]
+  },
+  {
+    bg: "linear-gradient(135deg,#ff9966,#ff5e62)",
+    title: "Stage 2 😌",
+    lines: [
+      "Okay okay thoda sa drama kam",
+      "Main maanta hoon galti meri thi",
+      "Par itni bhi nahi thi jitna bhaav mil raha",
+      "Ab curiosity aa rahi hogi 😏"
+    ]
+  },
+  {
+    bg: "linear-gradient(135deg,#845ec2,#d65db1)",
+    title: "Stage 3 😳",
+    lines: [
+      "Tum ignore karti ho par bhaag nahi paati",
+      "Ab to blush aa hi gaya hoga",
+      "Dil thoda soft ho raha hai na",
+      "Bas thoda sa aur…"
+    ]
+  },
+  {
+    bg: "linear-gradient(135deg,#2193b0,#6dd5ed)",
+    title: "Final Stage ❤️",
+    lines: [
+      "Ab choice sirf ek hai",
+      "Aur wo choice tumhe pata hai",
+      "Button niche hi hai 😌",
+      "Ab maan jao na"
+    ]
+  }
+];
+
+let stageIndex = 0;
+let clickCount = 0;
+
+const title = document.getElementById("title");
+const text = document.getElementById("text");
+const box = document.getElementById("buttons");
+
+function vibrateShort() {
+  if (navigator.vibrate) navigator.vibrate(50);
+}
+function vibrateLong() {
+  if (navigator.vibrate) navigator.vibrate([100,50,100,50,200]);
+}
+
+function loadStage() {
+  document.body.style.background = stages[stageIndex].bg;
+  title.innerText = stages[stageIndex].title;
+  text.innerText = stages[stageIndex].lines[0];
+}
+
+loadStage();
+
+// 22 NO buttons
+for (let i = 0; i < 22; i++) {
+  const b = document.createElement("button");
+  b.className = "no";
+  b.innerText = "Abhi bhi gussa hoon 😤";
+  random(b);
+
+  b.onclick = () => {
+    vibrateShort();
+    const lines = stages[stageIndex].lines;
+    text.innerText = lines[clickCount % lines.length];
+    clickCount++;
+
+    if (clickCount % 6 === 0 && stageIndex < stages.length - 1) {
+      stageIndex++;
+      loadStage();
+    }
+
+    random(b);
+  };
+
+  box.appendChild(b);
+}
+
+// YES button
+const yes = document.createElement("button");
+yes.className = "yes";
+yes.innerText = "Okay maaf kiya 😳❤️";
+yes.style.bottom = "10px";
+yes.style.left = "50%";
+yes.style.transform = "translateX(-50%)";
+
+yes.onclick = () => {
+  vibrateLong();
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:#ff4d6d;
+      color:white;
+      font-family:Segoe UI;
+      text-align:center;
+      padding:40px;">
+      <div>
+        <h1>I LOVE YOU MERI BETI ❤️</h1>
+        <p style="font-size:22px; line-height:1.8;">
+          Tumhara gussa jeet gaya…  
+          par pyaar usse bhi zyada ❤️  
+          <br><br>
+          Ab smile karo,  
+          game khatam hua  
+          par story abhi baaki hai 😌
+        </p>
+      </div>
+    </div>`;
+};
+
+box.appendChild(yes);
+
+function random(btn) {
+  btn.style.top = Math.random() * 280 + "px";
+  btn.style.left = Math.random() * 650 + "px";
+}
+</script>
+</body>
+</html>
